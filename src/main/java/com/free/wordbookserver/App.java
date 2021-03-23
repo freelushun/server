@@ -5,6 +5,6 @@ import com.free.wordbookserver.myutil.Utility;
 
 public class App {
     public static void main(String[] args) {
-        Utility.sendSms(BasicUtil.genVerifyCode(6,"0"),"13896650767",Utility.SIGNUP);
+        Utility.sendSms(BasicUtil.genShortString(6,"0"),"13896650767",Utility.SIGNUP);
     }
 }

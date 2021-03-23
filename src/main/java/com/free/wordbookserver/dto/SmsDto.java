@@ -8,7 +8,7 @@ public class SmsDto {
     public String phone;
     public String name;
     public String password;
-    public String success;
+    public String status;
     public String type;
 
     public String getPhone() {
@@ -35,12 +35,12 @@ public class SmsDto {
         this.password = password;
     }
 
-    public String getSuccess() {
-        return success;
+    public String getStatus() {
+        return status;
     }
 
-    public void setSuccess(String success) {
-        this.success = success;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getType() {

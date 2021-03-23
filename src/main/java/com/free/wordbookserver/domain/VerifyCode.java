@@ -21,6 +21,19 @@ public class VerifyCode {
         this.code = code;
     }
 
+    public VerifyCode() {
+    }
+
+    /**
+     *
+     * @param phone 电话
+     * @param code  验证码
+     */
+    public VerifyCode(String phone, String code) {
+        this.phone = phone;
+        this.code = code;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

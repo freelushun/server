@@ -51,12 +51,13 @@ public class AccountController {
 
         }
         //将验证码写入验证码表,验证码表由手机号作为唯一主键
-        smsDto.setSuccess(status);
+        service.saveVerifyCode(phone,verifyCode);
+
+        //短信发送状态返回给用户
+        smsDto.setStatus(status);
 
 
-//        String status = Utility.sendSms(BasicUtil.genVerifyCode(6,"1"),smsDto.getPhone(), smsDto.getType());
-//        smsDto.setSuccess(status);
-//        return smsDto;
+
 
         return smsDto;
     }
