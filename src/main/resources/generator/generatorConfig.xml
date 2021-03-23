@@ -40,7 +40,13 @@
         <javaClientGenerator targetProject="src\main\java"
                              targetPackage="com.free.wordbookserver.mapper"
                              type="XMLMAPPER"/>
-
-        <table tableName="test" domainObjectName="Test"/>
+        <!--    测试表-->
+        <!--        <table tableName="test" domainObjectName="Test"/>-->
+        <!--    协议表-->
+        <!--        <table tableName="protocol" domainObjectName="Protocol"/>-->
+        <!--        用户表-->
+        <!--        <table tableName="user" domainObjectName="User"/>-->
+        <!--验证码表-->
+        <table tableName="verifycode" domainObjectName="VerifyCode"/>
     </context>
 </generatorConfiguration>

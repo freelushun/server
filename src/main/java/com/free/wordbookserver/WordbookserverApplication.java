@@ -13,15 +13,15 @@ import org.springframework.core.env.Environment;
 @MapperScan("com.free.wordbookserver.mapper")
 public class WordbookserverApplication {
 
-    private static final Logger LOG = LoggerFactory.getLogger(WordbookserverApplication.class);
+private static final Logger LOG = LoggerFactory.getLogger(WordbookserverApplication.class);
 
-    public static void main(String[] args) {
-        SpringApplication app =new SpringApplication(WordbookserverApplication.class);
-        Environment environment = app.run(args).getEnvironment() ;
-        LOG.info("启动成功");
-        LOG.info("WordbookSever地址:\t http://127.0.0.1:{}",environment.getProperty("server.port"));
+public static void main(String[] args) {
+    SpringApplication app =new SpringApplication(WordbookserverApplication.class);
+    Environment environment = app.run(args).getEnvironment() ;
+    LOG.info("启动成功");
+    LOG.info("WordbookSever地址:\t http://127.0.0.1:{}",environment.getProperty("server.port"));
 
-
-    }
+}
+    
 
 }
