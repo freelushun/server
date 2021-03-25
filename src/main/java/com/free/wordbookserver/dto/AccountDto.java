@@ -4,12 +4,30 @@ package com.free.wordbookserver.dto;
 /**
  * 涉及短信发送的信息传输
  */
-public class SmsDto {
+public class AccountDto {
     public String phone;
     public String name;
     public String password;
     public String status;
     public String type;
+    public String verifyCode;
+    public String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
+    }
 
     public String getPhone() {
         return phone;

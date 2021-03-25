@@ -1,6 +1,9 @@
 package com.free.wordbookserver.myutil;
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 基础工具包  不涉及业务逻辑
  */
@@ -53,6 +56,61 @@ public class BasicUtil {
     public static int genRandom(int maxValue) {
 
         return (int) (Math.random() * maxValue);
+    }
+
+
+    /**
+     * 校验是否合法的11位手机号码
+     *
+     * @param phone 传入的手机号
+     * @return 是否合法
+     */
+    public static boolean validatePhoneNumber(String phone) {
+        String regex = "^[1]\\d{10}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(phone);
+        return matcher.matches();
+    }
+
+    /**
+     * 校验传入是否为指定位数的数字
+     *
+     * @param number 数据
+     * @param n      指定位数
+     * @return 结果
+     */
+    public static boolean validateNumber(String number, int n) {
+        String regex = String.format("^\\d{%d}$", n);
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(number);
+        return matcher.matches();
+    }
+
+    /**
+     * 生成指定位数的乱序字符
+     *
+     * @param n 指定位数
+     * @return 返回乱序字符
+     */
+    public static String genOutOfOrder(int n) {
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            switch (genRandom(3)) {
+                case 0:
+                    builder.append(_ABC[genRandom(_ABC.length)]);
+                    break;
+                case 1:
+                    builder.append(_abc[genRandom(_abc.length)]);
+                    break;
+                    case 2:
+                    builder.append(_123[genRandom(_123.length)]);
+                    break;
+            }
+
+        }
+
+        return builder.toString();
     }
 
 

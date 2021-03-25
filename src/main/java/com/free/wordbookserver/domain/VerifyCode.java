@@ -5,6 +5,8 @@ public class VerifyCode {
 
     private String code;
 
+    private String type;
+
     public String getPhone() {
         return phone;
     }
@@ -21,17 +23,18 @@ public class VerifyCode {
         this.code = code;
     }
 
-    public VerifyCode() {
+    public String getType() {
+        return type;
     }
 
-    /**
-     *
-     * @param phone 电话
-     * @param code  验证码
-     */
-    public VerifyCode(String phone, String code) {
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public VerifyCode(String phone, String code, String type) {
         this.phone = phone;
         this.code = code;
+        this.type = type;
     }
 
     @Override
@@ -42,6 +45,7 @@ public class VerifyCode {
         sb.append("Hash = ").append(hashCode());
         sb.append(", phone=").append(phone);
         sb.append(", code=").append(code);
+        sb.append(", type=").append(type);
         sb.append("]");
         return sb.toString();
     }

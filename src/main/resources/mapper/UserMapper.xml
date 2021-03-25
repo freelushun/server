@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.free.wordbookserver.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.free.wordbookserver.domain.User">
-    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <id column="user_phone" jdbcType="CHAR" property="userPhone" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_phone" jdbcType="CHAR" property="userPhone" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
     <result column="sex" jdbcType="CHAR" property="sex" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, user_name, user_phone, comment, sex, password
+    user_phone, user_id, user_name, comment, sex, password
   </sql>
   <select id="selectByExample" parameterType="com.free.wordbookserver.domain.UserExample" resultMap="BaseResultMap">
     select
@@ -84,15 +84,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_phone = #{userPhone,jdbcType=CHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from user
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_phone = #{userPhone,jdbcType=CHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.free.wordbookserver.domain.UserExample">
     delete from user
@@ -101,24 +101,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.free.wordbookserver.domain.User">
-    insert into user (user_id, user_name, user_phone, 
+    insert into user (user_phone, user_id, user_name, 
       comment, sex, password
       )
-    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=CHAR}, 
+    values (#{userPhone,jdbcType=CHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
       #{comment,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{password,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.free.wordbookserver.domain.User">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userPhone != null">
+        user_phone,
+      </if>
       <if test="userId != null">
         user_id,
       </if>
       <if test="userName != null">
         user_name,
-      </if>
-      <if test="userPhone != null">
-        user_phone,
       </if>
       <if test="comment != null">
         comment,
@@ -131,14 +131,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userPhone != null">
+        #{userPhone,jdbcType=CHAR},
+      </if>
       <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userPhone != null">
-        #{userPhone,jdbcType=CHAR},
       </if>
       <if test="comment != null">
         #{comment,jdbcType=VARCHAR},
@@ -160,14 +160,14 @@
   <update id="updateByExampleSelective" parameterType="map">
     update user
     <set>
+      <if test="record.userPhone != null">
+        user_phone = #{record.userPhone,jdbcType=CHAR},
+      </if>
       <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
       <if test="record.userName != null">
         user_name = #{record.userName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userPhone != null">
-        user_phone = #{record.userPhone,jdbcType=CHAR},
       </if>
       <if test="record.comment != null">
         comment = #{record.comment,jdbcType=VARCHAR},
@@ -185,9 +185,9 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update user
-    set user_id = #{record.userId,jdbcType=INTEGER},
+    set user_phone = #{record.userPhone,jdbcType=CHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
-      user_phone = #{record.userPhone,jdbcType=CHAR},
       comment = #{record.comment,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=CHAR},
       password = #{record.password,jdbcType=VARCHAR}
@@ -198,11 +198,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.free.wordbookserver.domain.User">
     update user
     <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
       <if test="userName != null">
         user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userPhone != null">
-        user_phone = #{userPhone,jdbcType=CHAR},
       </if>
       <if test="comment != null">
         comment = #{comment,jdbcType=VARCHAR},
@@ -214,15 +214,15 @@
         password = #{password,jdbcType=VARCHAR},
       </if>
     </set>
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_phone = #{userPhone,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.free.wordbookserver.domain.User">
     update user
-    set user_name = #{userName,jdbcType=VARCHAR},
-      user_phone = #{userPhone,jdbcType=CHAR},
+    set user_id = #{userId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=CHAR},
       password = #{password,jdbcType=VARCHAR}
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_phone = #{userPhone,jdbcType=CHAR}
   </update>
 </mapper>

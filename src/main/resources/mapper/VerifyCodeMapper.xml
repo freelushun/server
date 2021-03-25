@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.free.wordbookserver.domain.VerifyCode">
     <id column="phone" jdbcType="CHAR" property="phone" />
     <result column="code" jdbcType="CHAR" property="code" />
+    <result column="type" jdbcType="CHAR" property="type" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    phone, code
+    phone, code, type
   </sql>
   <select id="selectByExample" parameterType="com.free.wordbookserver.domain.VerifyCodeExample" resultMap="BaseResultMap">
     select
@@ -97,8 +98,8 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.free.wordbookserver.domain.VerifyCode">
-    insert into verifycode (phone, code)
-    values (#{phone,jdbcType=CHAR}, #{code,jdbcType=CHAR})
+    insert into verifycode (phone, code, type)
+    values (#{phone,jdbcType=CHAR}, #{code,jdbcType=CHAR}, #{type,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.free.wordbookserver.domain.VerifyCode">
     insert into verifycode
@@ -109,6 +110,9 @@
       <if test="code != null">
         code,
       </if>
+      <if test="type != null">
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="phone != null">
@@ -116,6 +120,9 @@
       </if>
       <if test="code != null">
         #{code,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -134,6 +141,9 @@
       <if test="record.code != null">
         code = #{record.code,jdbcType=CHAR},
       </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -142,7 +152,8 @@
   <update id="updateByExample" parameterType="map">
     update verifycode
     set phone = #{record.phone,jdbcType=CHAR},
-      code = #{record.code,jdbcType=CHAR}
+      code = #{record.code,jdbcType=CHAR},
+      type = #{record.type,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -153,12 +164,16 @@
       <if test="code != null">
         code = #{code,jdbcType=CHAR},
       </if>
+      <if test="type != null">
+        type = #{type,jdbcType=CHAR},
+      </if>
     </set>
     where phone = #{phone,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.free.wordbookserver.domain.VerifyCode">
     update verifycode
-    set code = #{code,jdbcType=CHAR}
+    set code = #{code,jdbcType=CHAR},
+      type = #{type,jdbcType=CHAR}
     where phone = #{phone,jdbcType=CHAR}
   </update>
 </mapper>

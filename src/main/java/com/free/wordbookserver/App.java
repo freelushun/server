@@ -2,9 +2,11 @@ package com.free.wordbookserver;
 
 import com.free.wordbookserver.myutil.BasicUtil;
 import com.free.wordbookserver.myutil.Utility;
+import org.omg.CORBA.BAD_CONTEXT;
 
 public class App {
     public static void main(String[] args) {
-        Utility.sendSms(BasicUtil.genShortString(6,"0"),"13896650767",Utility.SIGNUP);
+        System.out.println(BasicUtil.genOutOfOrder(8));
+
     }
 }

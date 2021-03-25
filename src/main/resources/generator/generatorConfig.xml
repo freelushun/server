@@ -45,8 +45,8 @@
         <!--    协议表-->
         <!--        <table tableName="protocol" domainObjectName="Protocol"/>-->
         <!--        用户表-->
-        <!--        <table tableName="user" domainObjectName="User"/>-->
+                <table tableName="user" domainObjectName="User"/>
         <!--验证码表-->
-        <table tableName="verifycode" domainObjectName="VerifyCode"/>
+<!--        <table tableName="verifycode" domainObjectName="VerifyCode"/>-->
     </context>
 </generatorConfiguration>
