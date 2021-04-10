@@ -1,11 +1,9 @@
 package com.free.wordbookserver.service;
 
 
-import com.free.wordbookserver.domain.Catalogue;
-import com.free.wordbookserver.domain.CatalogueExample;
-import com.free.wordbookserver.domain.T11;
-import com.free.wordbookserver.domain.Tword;
+import com.free.wordbookserver.domain.*;
 import com.free.wordbookserver.mapper.CatalogueMapper;
+import com.free.wordbookserver.mapper.PlanMapper;
 import com.free.wordbookserver.mapper.T11Mapper;
 import com.free.wordbookserver.mapper.TwordMapper;
 import com.sun.org.apache.xml.internal.resolver.Catalog;
@@ -25,6 +23,9 @@ public class WordService {
     @Resource
     CatalogueMapper catalogueMapper;
 
+    @Resource
+    PlanMapper planMapper;
+
     /**
      * 查询单词总表
      *
@@ -43,13 +44,25 @@ public class WordService {
      */
     public List<Catalogue> booklist(String type) {
         List<Catalogue> catalogues;
+        CatalogueExample catalogueExample = new CatalogueExample();
+
         //如果类别为0返回所有的表格
         if (type.equals("0"))
-            return catalogueMapper.selectByExample(null);
-
-        CatalogueExample catalogueExample = new CatalogueExample();
+            return catalogueMapper.selectByExample(catalogueExample);
         catalogueExample.createCriteria().andTypeEqualTo(type);
         return catalogueMapper.selectByExample(catalogueExample);
 
+    }
+
+
+    /**
+     * 根据传入的plan写入库
+     *
+     * @param plan
+     * @return
+     */
+    public String insertPlan(Plan plan) {
+        int a = planMapper.insert(plan);
+        return a > -1?"success":"false";
     }
 }
