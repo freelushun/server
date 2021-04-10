@@ -8,7 +8,11 @@ import com.free.wordbookserver.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.security.NoSuchAlgorithmException;
 
+/**
+ * 账号服务控制器
+ */
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -67,13 +71,12 @@ public class AccountController {
         accountDto.setVerifyCode(verifyCode);
 
 
-       /**************后期需要删除的代码**************/
-       /**************start***********************/
+        /**************后期需要删除的代码**************/
+        /**************start***********************/
 
-       accountDto.setVerifyCode(verifyCode);
+        accountDto.setVerifyCode(verifyCode);
 
-       /**************end*************************/
-
+        /**************end*************************/
 
 
         return accountDto;
@@ -83,36 +86,56 @@ public class AccountController {
      * 账号操作控制器  登录/注册
      */
     @PostMapping("/ctrlAccount")
-    public AccountDto ctrlAccount(@RequestBody AccountDto accountDto) {
+    public AccountDto ctrlAccount(@RequestBody AccountDto accountDto) throws NoSuchAlgorithmException {
         String phone = accountDto.getPhone();
+
         String code = accountDto.getVerifyCode();
-        if (!(BasicUtil.validateNumber(code, 6) && BasicUtil.validatePhoneNumber(phone))) {
-            accountDto.setStatus("failed");
-            return accountDto;
-        }
-        //校验验证码  并且判断类型  进行业务的分流
-        switch (service.checkVerifyCode(phone, code)) {
-            //注册新账号
-            case "00":
-                accountDto = service.signUp(accountDto);
+        //验证码 如果没有验证按 代表着使用密码进行验证
+        if (code==null) {
+            //账号密码登录
+            String password = accountDto.getPassword();
 
-                break;
-            //登录账号:
-            case "01":
-                accountDto = service.signIn(accountDto);
-                break;
+            /**************后期需要删除的代码**************/
+            /**************start***********************/
 
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+
+            /**************end*************************/
+
+            return service.verifyPassword(accountDto);
+        } else {
+            if (!(BasicUtil.validateNumber(code, 6) && BasicUtil.validatePhoneNumber(phone))) {
+                accountDto.setStatus("failed");
+                return accountDto;
+            }
+            //校验验证码  并且判断类型  进行业务的分流
+            switch (service.checkVerifyCode(phone, code)) {
+                //注册新账号
+                case "00":
+                    accountDto = service.signUp(accountDto);
+
+                    break;
+                //登录账号:
+                case "01":
+                    accountDto = service.signIn(accountDto);
+                    break;
+
+            }
         }
 
 
         /**************后期需要删除的代码**************/
         /**************start***********************/
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         /**************end*************************/
 

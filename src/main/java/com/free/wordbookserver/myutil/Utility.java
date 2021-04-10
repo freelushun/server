@@ -38,8 +38,8 @@ public class Utility {
             phoneNumber = "+86" + phoneNumber;
             String[] phoneNumberSet1 = {phoneNumber};
             req.setPhoneNumberSet(phoneNumberSet1);
-//            req.setSign("卢顺个人代码展示");
-            req.setSign("顺个人代码展示");
+            req.setSign("卢顺个人代码展示");
+//            req.setSign("顺个人代码展示");
 
             //模板id  需要改变
             req.setTemplateID(sendType);

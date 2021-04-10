@@ -1,16 +1,17 @@
 package com.free.wordbookserver.service;
 
 
-import com.free.wordbookserver.domain.User;
-import com.free.wordbookserver.domain.UserExample;
-import com.free.wordbookserver.domain.VerifyCode;
+import com.free.wordbookserver.domain.*;
 import com.free.wordbookserver.dto.AccountDto;
+import com.free.wordbookserver.mapper.PlanMapper;
 import com.free.wordbookserver.mapper.UserMapper;
 import com.free.wordbookserver.mapper.VerifyCodeMapper;
 import com.free.wordbookserver.myutil.BasicUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public class AccountService {
     private UserMapper userMapper;
     @Resource
     private VerifyCodeMapper verifyCodeMapper;
+    @Resource
+    private PlanMapper planMapper;
 
     /**
      * 通过手机号检查是否存在账户
@@ -104,7 +107,7 @@ public class AccountService {
         user.setUserPhone(accountDto.getPhone());
         user.setUserName(name);
         user.setUserId(BasicUtil.genShortString(8, "0"));
-       userMapper.insert(user);
+        userMapper.insert(user);
         accountDto.setStatus("ok");
         accountDto.setName(name);
         accountDto.setId(user.getUserId());
@@ -113,7 +116,7 @@ public class AccountService {
 
 
     /**
-     * 进行登录
+     * 进行登录 获取登录用户信息
      *
      * @param accountDto 传入实体
      * @return 返回实体
@@ -125,4 +128,44 @@ public class AccountService {
         accountDto.setId(user.getUserId());
         return accountDto;
     }
+
+    /**
+     * 校验用户账号和密码
+     */
+    public AccountDto verifyPassword(AccountDto accountDto) throws NoSuchAlgorithmException {
+        String phone = accountDto.getPhone();
+        String password = accountDto.getPassword();
+        User user = userMapper.selectByPrimaryKey(phone);
+        if (BasicUtil.encryptBySHA256(password).equals(user.getPassword())) {
+            //校验成功后 检查此账号是否具有计划，并且添加
+            accountDto.setHasPlan(!obPlan(phone).isEmpty());
+            accountDto.setStatus("ok");
+        } else {
+            accountDto.setStatus("failed");
+        }
+
+        return accountDto;
+    }
+
+
+    /**
+     * 检查此账号具有的计划
+     */
+    public List<Plan> obPlan(String phone) {
+        List<Plan> plans;
+        PlanExample example = new PlanExample();
+        example.createCriteria().andPhoneEqualTo(phone);
+        plans = planMapper.selectByExample(example);
+        return plans;
+    }
+
+
+    /**
+     * 向账号添加计划
+     */
+    public boolean insertPlan() {
+        return false;
+    }
+
+
 }

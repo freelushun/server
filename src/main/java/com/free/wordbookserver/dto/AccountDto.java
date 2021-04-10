@@ -1,6 +1,10 @@
 package com.free.wordbookserver.dto;
 
 
+import com.free.wordbookserver.domain.Plan;
+
+import java.util.List;
+
 /**
  * 涉及短信发送的信息传输
  */
@@ -12,6 +16,25 @@ public class AccountDto {
     public String type;
     public String verifyCode;
     public String id;
+    public String msg;
+    public boolean hasPlan;
+
+
+    public boolean isHasPlan() {
+        return hasPlan;
+    }
+
+    public void setHasPlan(boolean hasPlan) {
+        this.hasPlan = hasPlan;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
     public String getId() {
         return id;
