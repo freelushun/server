@@ -1,6 +1,6 @@
 package com.free.wordbookserver.dto;
 
-public class MyWord {
+public class QueryWord {
     private Integer id;
 
     private String word;

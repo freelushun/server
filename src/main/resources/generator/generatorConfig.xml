@@ -51,7 +51,8 @@
 <!--        <table tableName="t11" domainObjectName="T11"/>-->
 <!--        <table tableName="tword" domainObjectName="Tword"/>-->
 <!--        <table tableName="plan" domainObjectName="Plan"/>-->
-        <table tableName="catalogue" domainObjectName="Catalogue"/>
+<!--        <table tableName="catalogue" domainObjectName="Catalogue"/>-->
+        <table tableName="twordrepeat" domainObjectName="PlanWord"/>
 
     </context>
 </generatorConfiguration>

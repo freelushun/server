@@ -2,15 +2,13 @@ package com.free.wordbookserver.service;
 
 
 import com.free.wordbookserver.domain.*;
-import com.free.wordbookserver.mapper.CatalogueMapper;
-import com.free.wordbookserver.mapper.PlanMapper;
-import com.free.wordbookserver.mapper.T11Mapper;
-import com.free.wordbookserver.mapper.TwordMapper;
+import com.free.wordbookserver.mapper.*;
 import com.sun.org.apache.xml.internal.resolver.Catalog;
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -25,6 +23,9 @@ public class WordService {
 
     @Resource
     PlanMapper planMapper;
+    @Resource
+    PlanWordMapper planWordMapper;
+
 
     /**
      * 查询单词总表
@@ -58,11 +59,31 @@ public class WordService {
     /**
      * 根据传入的plan写入库
      *
-     * @param plan
-     * @return
+     * @param plan 传入的计划
+     * @return 返回对应的classId的单词列表  耗时操作
      */
-    public String insertPlan(Plan plan) {
-        int a = planMapper.insert(plan);
-        return a > -1?"success":"false";
+    public boolean insertPlan(Plan plan) {
+
+        return planMapper.insert(plan) > 0;
     }
+
+
+    /**
+     * 根据传入的classid 进行返回对应的单词表
+     *
+     * @param classId 表id
+     * @return 单词列表 List<PlanWord>
+     */
+    public List<PlanWord> queryPlanWordList(String classId) {
+        PlanWordExample planWordExample = new PlanWordExample();
+        planWordExample.createCriteria().andClassidEqualTo(classId);
+        List<PlanWord> planWords = planWordMapper.selectByExample(planWordExample);
+        System.out.println("id:" + classId);
+        System.out.println("size:" + planWords.size());
+        System.out.println(Arrays.toString(planWords.toArray()));
+        return planWordMapper.selectByExample(planWordExample);
+
+    }
+
+
 }

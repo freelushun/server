@@ -21,9 +21,14 @@ public class TestController {
 
 
 
-    @GetMapping("/test")
-    public List<Test> test(){
+    @GetMapping("/list")
+    public List<Test> list(){
         return  testService.list();
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return  testService.test();
     }
 
 
