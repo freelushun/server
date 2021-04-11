@@ -2,8 +2,8 @@ package com.free.wordbookserver.controller;
 
 import com.free.wordbookserver.domain.Catalogue;
 import com.free.wordbookserver.domain.Plan;
-import com.free.wordbookserver.domain.T11;
-import com.free.wordbookserver.dto.MyWord;
+import com.free.wordbookserver.domain.PlanWord;
+import com.free.wordbookserver.dto.QueryWord;
 import com.free.wordbookserver.myutil.ConvertUtil;
 import com.free.wordbookserver.service.WordService;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +28,8 @@ public class WordController {
      * @return 单词总表
      */
     @GetMapping("/word")
-    public List<MyWord> wordList() {
-        List<MyWord> words = ConvertUtil.convert(service.list(), MyWord.class);
+    public List<QueryWord> wordList() {
+        List<QueryWord> words = ConvertUtil.convert(service.list(), QueryWord.class);
         return words;
     }
 
@@ -46,7 +46,21 @@ public class WordController {
      * 传入个人的计划  并进行保存
      */
     @PostMapping("/word/plan/save")
-    public String insertPlan(@RequestBody Plan plan) {
+    public boolean insertPlan(@RequestBody Plan plan) {
         return service.insertPlan(plan);
     }
+
+
+    /**
+     * 传入表id  进行单词列表的查询 优化数据库索引 查询时间大概为1s
+     * @param classId  列表id
+     * @return 单词列表
+     */
+    @GetMapping("/word/plan/queryPlanwordList/{classid}")
+    public List<PlanWord> queryPlanwordList (@PathVariable String classId){
+        return service.queryPlanWordList(classId);
+    }
+
+
+
 }
