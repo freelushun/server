@@ -68,7 +68,6 @@ public class AccountController {
 
         //短信发送状态返回给用户
         accountDto.setStatus(status);
-        accountDto.setVerifyCode(verifyCode);
 
 
         /**************后期需要删除的代码**************/
@@ -81,6 +80,7 @@ public class AccountController {
 
         return accountDto;
     }
+
 
     /**
      * 账号操作控制器  登录/注册
@@ -108,6 +108,7 @@ public class AccountController {
 
             return service.verifyPassword(accountDto);
         } else {
+            //验证码格式错误
             if (!(BasicUtil.validateNumber(code, 6) && BasicUtil.validatePhoneNumber(phone))) {
                 accountDto.setStatus("failed");
                 return accountDto;
@@ -125,6 +126,7 @@ public class AccountController {
                     break;
 
             }
+            accountDto.setHasPlan(service.obPlan(phone)!=null);
         }
 
 

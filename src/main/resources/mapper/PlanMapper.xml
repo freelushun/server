@@ -2,13 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.free.wordbookserver.mapper.PlanMapper">
   <resultMap id="BaseResultMap" type="com.free.wordbookserver.domain.Plan">
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <id column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="class_id" jdbcType="VARCHAR" property="classId" />
     <result column="word_total" jdbcType="VARCHAR" property="wordTotal" />
+    <result column="start_day" jdbcType="VARCHAR" property="startDay" />
     <result column="days" jdbcType="VARCHAR" property="days" />
     <result column="average" jdbcType="VARCHAR" property="average" />
     <result column="finished" jdbcType="VARCHAR" property="finished" />
     <result column="usedday" jdbcType="VARCHAR" property="usedday" />
+    <result column="table_title" jdbcType="VARCHAR" property="tableTitle" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    phone, class_id, word_total, days, average, finished, usedday
+    phone, class_id, word_total, start_day, days, average, finished, usedday, table_title
   </sql>
   <select id="selectByExample" parameterType="com.free.wordbookserver.domain.PlanExample" resultMap="BaseResultMap">
     select
@@ -85,6 +87,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from plan
+    where phone = #{phone,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from plan
+    where phone = #{phone,jdbcType=VARCHAR}
+  </delete>
   <delete id="deleteByExample" parameterType="com.free.wordbookserver.domain.PlanExample">
     delete from plan
     <if test="_parameter != null">
@@ -93,11 +105,13 @@
   </delete>
   <insert id="insert" parameterType="com.free.wordbookserver.domain.Plan">
     insert into plan (phone, class_id, word_total, 
-      days, average, finished, 
-      usedday)
+      start_day, days, average, 
+      finished, usedday, table_title
+      )
     values (#{phone,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{wordTotal,jdbcType=VARCHAR}, 
-      #{days,jdbcType=VARCHAR}, #{average,jdbcType=VARCHAR}, #{finished,jdbcType=VARCHAR}, 
-      #{usedday,jdbcType=VARCHAR})
+      #{startDay,jdbcType=VARCHAR}, #{days,jdbcType=VARCHAR}, #{average,jdbcType=VARCHAR}, 
+      #{finished,jdbcType=VARCHAR}, #{usedday,jdbcType=VARCHAR}, #{tableTitle,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.free.wordbookserver.domain.Plan">
     insert into plan
@@ -111,6 +125,9 @@
       <if test="wordTotal != null">
         word_total,
       </if>
+      <if test="startDay != null">
+        start_day,
+      </if>
       <if test="days != null">
         days,
       </if>
@@ -123,6 +140,9 @@
       <if test="usedday != null">
         usedday,
       </if>
+      <if test="tableTitle != null">
+        table_title,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="phone != null">
@@ -133,6 +153,9 @@
       </if>
       <if test="wordTotal != null">
         #{wordTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="startDay != null">
+        #{startDay,jdbcType=VARCHAR},
       </if>
       <if test="days != null">
         #{days,jdbcType=VARCHAR},
@@ -145,6 +168,9 @@
       </if>
       <if test="usedday != null">
         #{usedday,jdbcType=VARCHAR},
+      </if>
+      <if test="tableTitle != null">
+        #{tableTitle,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -166,6 +192,9 @@
       <if test="record.wordTotal != null">
         word_total = #{record.wordTotal,jdbcType=VARCHAR},
       </if>
+      <if test="record.startDay != null">
+        start_day = #{record.startDay,jdbcType=VARCHAR},
+      </if>
       <if test="record.days != null">
         days = #{record.days,jdbcType=VARCHAR},
       </if>
@@ -178,6 +207,9 @@
       <if test="record.usedday != null">
         usedday = #{record.usedday,jdbcType=VARCHAR},
       </if>
+      <if test="record.tableTitle != null">
+        table_title = #{record.tableTitle,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -188,12 +220,56 @@
     set phone = #{record.phone,jdbcType=VARCHAR},
       class_id = #{record.classId,jdbcType=VARCHAR},
       word_total = #{record.wordTotal,jdbcType=VARCHAR},
+      start_day = #{record.startDay,jdbcType=VARCHAR},
       days = #{record.days,jdbcType=VARCHAR},
       average = #{record.average,jdbcType=VARCHAR},
       finished = #{record.finished,jdbcType=VARCHAR},
-      usedday = #{record.usedday,jdbcType=VARCHAR}
+      usedday = #{record.usedday,jdbcType=VARCHAR},
+      table_title = #{record.tableTitle,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.free.wordbookserver.domain.Plan">
+    update plan
+    <set>
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="wordTotal != null">
+        word_total = #{wordTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="startDay != null">
+        start_day = #{startDay,jdbcType=VARCHAR},
+      </if>
+      <if test="days != null">
+        days = #{days,jdbcType=VARCHAR},
+      </if>
+      <if test="average != null">
+        average = #{average,jdbcType=VARCHAR},
+      </if>
+      <if test="finished != null">
+        finished = #{finished,jdbcType=VARCHAR},
+      </if>
+      <if test="usedday != null">
+        usedday = #{usedday,jdbcType=VARCHAR},
+      </if>
+      <if test="tableTitle != null">
+        table_title = #{tableTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.free.wordbookserver.domain.Plan">
+    update plan
+    set class_id = #{classId,jdbcType=VARCHAR},
+      word_total = #{wordTotal,jdbcType=VARCHAR},
+      start_day = #{startDay,jdbcType=VARCHAR},
+      days = #{days,jdbcType=VARCHAR},
+      average = #{average,jdbcType=VARCHAR},
+      finished = #{finished,jdbcType=VARCHAR},
+      usedday = #{usedday,jdbcType=VARCHAR},
+      table_title = #{tableTitle,jdbcType=VARCHAR}
+    where phone = #{phone,jdbcType=VARCHAR}
   </update>
 </mapper>

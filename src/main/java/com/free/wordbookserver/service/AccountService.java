@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +25,7 @@ public class AccountService {
     private VerifyCodeMapper verifyCodeMapper;
     @Resource
     private PlanMapper planMapper;
+
 
     /**
      * 通过手机号检查是否存在账户
@@ -136,9 +136,9 @@ public class AccountService {
         String phone = accountDto.getPhone();
         String password = accountDto.getPassword();
         User user = userMapper.selectByPrimaryKey(phone);
-        if (BasicUtil.encryptBySHA256(password).equals(user.getPassword())) {
+        if (user!=null&&BasicUtil.encryptBySHA256(password).equals(user.getPassword())) {
             //校验成功后 检查此账号是否具有计划，并且添加
-            accountDto.setHasPlan(!obPlan(phone).isEmpty());
+            accountDto.setHasPlan(obPlan(phone)!=null);
             accountDto.setStatus("ok");
         } else {
             accountDto.setStatus("failed");
@@ -151,12 +151,8 @@ public class AccountService {
     /**
      * 检查此账号具有的计划
      */
-    public List<Plan> obPlan(String phone) {
-        List<Plan> plans;
-        PlanExample example = new PlanExample();
-        example.createCriteria().andPhoneEqualTo(phone);
-        plans = planMapper.selectByExample(example);
-        return plans;
+    public Plan obPlan(String phone) {
+      return planMapper.selectByPrimaryKey(phone);
     }
 
 

@@ -314,6 +314,76 @@ public class PlanExample {
             return (Criteria) this;
         }
 
+        public Criteria andStartDayIsNull() {
+            addCriterion("start_day is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayIsNotNull() {
+            addCriterion("start_day is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayEqualTo(String value) {
+            addCriterion("start_day =", value, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayNotEqualTo(String value) {
+            addCriterion("start_day <>", value, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayGreaterThan(String value) {
+            addCriterion("start_day >", value, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayGreaterThanOrEqualTo(String value) {
+            addCriterion("start_day >=", value, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayLessThan(String value) {
+            addCriterion("start_day <", value, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayLessThanOrEqualTo(String value) {
+            addCriterion("start_day <=", value, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayLike(String value) {
+            addCriterion("start_day like", value, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayNotLike(String value) {
+            addCriterion("start_day not like", value, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayIn(List<String> values) {
+            addCriterion("start_day in", values, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayNotIn(List<String> values) {
+            addCriterion("start_day not in", values, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayBetween(String value1, String value2) {
+            addCriterion("start_day between", value1, value2, "startDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartDayNotBetween(String value1, String value2) {
+            addCriterion("start_day not between", value1, value2, "startDay");
+            return (Criteria) this;
+        }
+
         public Criteria andDaysIsNull() {
             addCriterion("days is null");
             return (Criteria) this;
@@ -591,6 +661,76 @@ public class PlanExample {
 
         public Criteria andUseddayNotBetween(String value1, String value2) {
             addCriterion("usedday not between", value1, value2, "usedday");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleIsNull() {
+            addCriterion("table_title is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleIsNotNull() {
+            addCriterion("table_title is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleEqualTo(String value) {
+            addCriterion("table_title =", value, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleNotEqualTo(String value) {
+            addCriterion("table_title <>", value, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleGreaterThan(String value) {
+            addCriterion("table_title >", value, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("table_title >=", value, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleLessThan(String value) {
+            addCriterion("table_title <", value, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleLessThanOrEqualTo(String value) {
+            addCriterion("table_title <=", value, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleLike(String value) {
+            addCriterion("table_title like", value, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleNotLike(String value) {
+            addCriterion("table_title not like", value, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleIn(List<String> values) {
+            addCriterion("table_title in", values, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleNotIn(List<String> values) {
+            addCriterion("table_title not in", values, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleBetween(String value1, String value2) {
+            addCriterion("table_title between", value1, value2, "tableTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableTitleNotBetween(String value1, String value2) {
+            addCriterion("table_title not between", value1, value2, "tableTitle");
             return (Criteria) this;
         }
     }

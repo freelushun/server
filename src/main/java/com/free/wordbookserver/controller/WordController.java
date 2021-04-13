@@ -3,6 +3,7 @@ package com.free.wordbookserver.controller;
 import com.free.wordbookserver.domain.Catalogue;
 import com.free.wordbookserver.domain.Plan;
 import com.free.wordbookserver.domain.PlanWord;
+import com.free.wordbookserver.dto.PlanDto;
 import com.free.wordbookserver.dto.QueryWord;
 import com.free.wordbookserver.myutil.ConvertUtil;
 import com.free.wordbookserver.service.WordService;
@@ -53,14 +54,28 @@ public class WordController {
 
     /**
      * 传入表id  进行单词列表的查询 优化数据库索引 查询时间大概为1s
-     * @param classId  列表id
+     * 返回某个具体的单词表
+     *
+     * @param classId 列表id
      * @return 单词列表
      */
     @GetMapping("/word/plan/queryPlanwordList/{classId}")
-    public List<PlanWord> queryPlanwordList (@PathVariable String classId){
+    public List<PlanWord> queryPlanwordList(@PathVariable String classId) {
         return service.queryPlanWordList(classId);
     }
 
+
+    /**
+     * 根据传入的电话号码  查询个人的计划表
+     *
+     * @param phone 电话号码
+     * @return 返回个人的计划目录
+     */
+    @GetMapping("/word/plan/queryPlan/{phone}")
+    public PlanDto queryPlanList(@PathVariable String phone) {
+
+        return service.queryPlanDto(phone);
+    }
 
 
 }

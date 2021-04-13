@@ -2,6 +2,7 @@ package com.free.wordbookserver.service;
 
 
 import com.free.wordbookserver.domain.*;
+import com.free.wordbookserver.dto.PlanDto;
 import com.free.wordbookserver.mapper.*;
 import com.sun.org.apache.xml.internal.resolver.Catalog;
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
@@ -25,6 +26,10 @@ public class WordService {
     PlanMapper planMapper;
     @Resource
     PlanWordMapper planWordMapper;
+    @Resource
+    PlanFinishMapper planFinishMapper;
+    @Resource
+    FinishwordMapper finishwordMapper;
 
 
     /**
@@ -63,8 +68,13 @@ public class WordService {
      * @return 返回对应的classId的单词列表  耗时操作
      */
     public boolean insertPlan(Plan plan) {
+        if (queryPlanList(plan.getPhone()) == null) {
+            return planMapper.insert(plan) > -1;
+        }
 
-        return planMapper.insert(plan) > 0;
+        return planMapper.updateByPrimaryKey(plan) > -1;
+
+
     }
 
 
@@ -83,6 +93,49 @@ public class WordService {
         System.out.println(Arrays.toString(planWords.toArray()));
         return planWordMapper.selectByExample(planWordExample);
 
+    }
+
+
+    /**
+     * 根据传入的电话号码  查询个人的计划表
+     *
+     * @param phone 电话号码
+     * @return 返回个人的计划目录
+     */
+    public Plan queryPlanList(String phone) {
+        return planMapper.selectByPrimaryKey(phone);
+    }
+
+
+    /**
+     * 返回个人的计划表
+     * 返回个人的学习日历
+     *
+     * @param phone 手机号码
+     * @return PlanDto
+     */
+    public PlanDto queryPlanDto(String phone) {
+        PlanDto planDto = new PlanDto();
+        planDto.setPlan(queryPlanList(phone));
+        //个人学习日历
+        PlanFinishExample planFinishExample = new PlanFinishExample();
+        planFinishExample.createCriteria().andPhoneEqualTo(phone);
+        List<PlanFinish> planFinishes = planFinishMapper.selectByExample(planFinishExample);
+        planDto.setPlanFinishes(planFinishes);
+        //finish的单词表
+        planDto.setFinishwords(queryFinishWord(phone));
+
+
+        return planDto;
+    }
+
+    /**
+     * 查询个人的单词表
+     */
+    public List<Finishword> queryFinishWord(String phone) {
+        FinishwordExample example = new FinishwordExample();
+        example.createCriteria().andPhoneEqualTo(phone);
+        return finishwordMapper.selectByExample(example);
     }
 
 
