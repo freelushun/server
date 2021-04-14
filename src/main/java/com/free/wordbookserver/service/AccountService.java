@@ -97,16 +97,17 @@ public class AccountService {
      * 注册新的账号
      *
      * @param accountDto 传入实体
-     * @return 返回信息
+     * @return 手机号码  用户名称  用户id
      */
     public AccountDto signUp(AccountDto accountDto) {
 
+        //生成用户名称
         String name = BasicUtil.genOutOfOrder(8);
-
         User user = new User();
         user.setUserPhone(accountDto.getPhone());
         user.setUserName(name);
         user.setUserId(BasicUtil.genShortString(8, "0"));
+        //保存用户
         userMapper.insert(user);
         accountDto.setStatus("ok");
         accountDto.setName(name);
@@ -129,20 +130,27 @@ public class AccountService {
         return accountDto;
     }
 
+
     /**
      * 校验用户账号和密码
+     * @param accountDto  手机号码  密码
+     * @return  手机号码 密码  校验状态  用户名称 用户短id
+     * @throws NoSuchAlgorithmException
      */
     public AccountDto verifyPassword(AccountDto accountDto) throws NoSuchAlgorithmException {
         String phone = accountDto.getPhone();
         String password = accountDto.getPassword();
         User user = userMapper.selectByPrimaryKey(phone);
-        if (user!=null&&BasicUtil.encryptBySHA256(password).equals(user.getPassword())) {
+        if (user != null && BasicUtil.encryptBySHA256(password).equals(user.getPassword())) {
             //校验成功后 检查此账号是否具有计划，并且添加
-            accountDto.setHasPlan(obPlan(phone)!=null);
+            accountDto.setHasPlan(obPlan(phone) != null);
             accountDto.setStatus("ok");
         } else {
             accountDto.setStatus("failed");
         }
+
+        accountDto.setId(user.getUserId());
+        accountDto.setName(user.getUserName());
 
         return accountDto;
     }
@@ -152,16 +160,10 @@ public class AccountService {
      * 检查此账号具有的计划
      */
     public Plan obPlan(String phone) {
-      return planMapper.selectByPrimaryKey(phone);
+        return planMapper.selectByPrimaryKey(phone);
     }
 
 
-    /**
-     * 向账号添加计划
-     */
-    public boolean insertPlan() {
-        return false;
-    }
 
 
 }

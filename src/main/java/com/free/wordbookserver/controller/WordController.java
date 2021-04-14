@@ -2,7 +2,7 @@ package com.free.wordbookserver.controller;
 
 import com.free.wordbookserver.domain.Catalogue;
 import com.free.wordbookserver.domain.Plan;
-import com.free.wordbookserver.domain.PlanWord;
+
 import com.free.wordbookserver.dto.QueryWord;
 import com.free.wordbookserver.myutil.ConvertUtil;
 import com.free.wordbookserver.service.WordService;
@@ -46,7 +46,7 @@ public class WordController {
      * 传入个人的计划  并进行保存
      */
     @PostMapping("/word/plan/save")
-    public boolean insertPlan(@RequestBody Plan plan) {
+    public String  insertPlan(@RequestBody Plan plan) {
         return service.insertPlan(plan);
     }
 
@@ -56,10 +56,10 @@ public class WordController {
      * @param classId  列表id
      * @return 单词列表
      */
-    @GetMapping("/word/plan/queryPlanwordList/{classid}")
-    public List<PlanWord> queryPlanwordList (@PathVariable String classId){
-        return service.queryPlanWordList(classId);
-    }
+//    @GetMapping("/word/plan/queryPlanwordList/{classid}")
+//    public List<PlanWord> queryPlanwordList (@PathVariable String classId){
+//        return service.queryPlanWordList(classId);
+//    }
 
 
 
