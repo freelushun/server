@@ -1,6 +1,7 @@
 package com.free.wordbookserver.controller;
 
 
+import com.free.wordbookserver.domain.Plan;
 import com.free.wordbookserver.dto.AccountDto;
 import com.free.wordbookserver.myutil.BasicUtil;
 import com.free.wordbookserver.myutil.Utility;
@@ -134,11 +135,29 @@ public class AccountController {
             }
             //设置用户是否含有个人计划
             accountDto.setHasPlan(service.obPlan(phone) != null);
+            if (service.obPlan(phone) != null) {
+                accountDto.setMsg(service.obPlan(phone).getClassId());
+            }
+
+
         }
 
 
         return accountDto;
     }
+
+
+    /**
+     * 根据传入的手机号码 返回个人的计划安排表
+     * @param phone 手机号码
+     * @return 计划安排表
+     */
+    @GetMapping("/person/plan/{phone}")
+    public Plan queryPersonPlan(@PathVariable String phone){
+        return  service.obPlan(phone);
+    }
+
+
 
 
 }

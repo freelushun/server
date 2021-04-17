@@ -2,10 +2,7 @@ package com.free.wordbookserver.service;
 
 
 import com.free.wordbookserver.domain.*;
-import com.free.wordbookserver.mapper.CatalogueMapper;
-import com.free.wordbookserver.mapper.PlanMapper;
-import com.free.wordbookserver.mapper.T11Mapper;
-import com.free.wordbookserver.mapper.TwordMapper;
+import com.free.wordbookserver.mapper.*;
 import com.sun.org.apache.xml.internal.resolver.Catalog;
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
 import org.springframework.stereotype.Service;
@@ -16,15 +13,21 @@ import java.util.List;
 @Service
 public class WordService {
 
-
+    //查询总表
     @Resource
     TwordMapper twordMapper;
 
+    //单词书目录表
     @Resource
     CatalogueMapper catalogueMapper;
 
+    //个人计划表
     @Resource
     PlanMapper planMapper;
+    //个人计划单词表
+    @Resource
+    PlanWordMapper planWordMapper;
+
 
     /**
      * 查询单词总表
@@ -62,7 +65,25 @@ public class WordService {
      * @return
      */
     public String insertPlan(Plan plan) {
-        int a = planMapper.insert(plan);
-        return a > -1?"success":"false";
+
+        if (planMapper.selectByPrimaryKey(plan.getPhone()) != null) {
+            planMapper.updateByPrimaryKey(plan);
+        } else planMapper.insert(plan);
+
+        return "success";
+
+    }
+
+
+    /**
+     * 根据传入的表id  返回对应的单词列表  优化索引 查询熟读较快  表规模不大
+     *
+     * @param classId 单词表id
+     * @return 单词列表
+     */
+    public List<PlanWord> table(String classId) {
+        PlanWordExample example = new PlanWordExample();
+        example.createCriteria().andClassidEqualTo(classId);
+        return planWordMapper.selectByExample(example);
     }
 }

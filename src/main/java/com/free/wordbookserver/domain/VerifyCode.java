@@ -1,5 +1,8 @@
 package com.free.wordbookserver.domain;
 
+/**
+ * 验证码表
+ */
 public class VerifyCode {
     private String phone;
 

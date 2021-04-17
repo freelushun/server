@@ -3,6 +3,7 @@ package com.free.wordbookserver.controller;
 import com.free.wordbookserver.domain.Catalogue;
 import com.free.wordbookserver.domain.Plan;
 
+import com.free.wordbookserver.domain.PlanWord;
 import com.free.wordbookserver.dto.QueryWord;
 import com.free.wordbookserver.myutil.ConvertUtil;
 import com.free.wordbookserver.service.WordService;
@@ -16,6 +17,8 @@ import java.util.List;
  */
 @RestController
 public class WordController {
+
+
 
     @Resource
     private WordService service;
@@ -46,20 +49,23 @@ public class WordController {
      * 传入个人的计划  并进行保存
      */
     @PostMapping("/word/plan/save")
-    public String  insertPlan(@RequestBody Plan plan) {
+    public String insertPlan(@RequestBody Plan plan) {
         return service.insertPlan(plan);
     }
 
 
     /**
-     * 传入表id  进行单词列表的查询 优化数据库索引 查询时间大概为1s
-     * @param classId  列表id
-     * @return 单词列表
+     * 去人单词表id后 返回对应的单词表
+     * @param classId  单词表id
+     * @return 具体的单词表
      */
-//    @GetMapping("/word/plan/queryPlanwordList/{classid}")
-//    public List<PlanWord> queryPlanwordList (@PathVariable String classId){
-//        return service.queryPlanWordList(classId);
-//    }
+    @GetMapping("/word/plan/table/{classId}")
+    public List<PlanWord> table(@PathVariable String classId) {
+
+        return service.table(classId);
+    }
+
+
 
 
 

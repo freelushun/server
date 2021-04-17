@@ -1,6 +1,6 @@
 package com.free.wordbookserver.domain;
 
-public class T11 {
+public class PersonPlanword {
     private Integer id;
 
     private String word;
@@ -10,6 +10,10 @@ public class T11 {
     private String href;
 
     private String means;
+
+    private String classid;
+
+    private String statu;
 
     public Integer getId() {
         return id;
@@ -51,6 +55,22 @@ public class T11 {
         this.means = means;
     }
 
+    public String getClassid() {
+        return classid;
+    }
+
+    public void setClassid(String classid) {
+        this.classid = classid;
+    }
+
+    public String getStatu() {
+        return statu;
+    }
+
+    public void setStatu(String statu) {
+        this.statu = statu;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -62,6 +82,8 @@ public class T11 {
         sb.append(", soundmark=").append(soundmark);
         sb.append(", href=").append(href);
         sb.append(", means=").append(means);
+        sb.append(", classid=").append(classid);
+        sb.append(", statu=").append(statu);
         sb.append("]");
         return sb.toString();
     }

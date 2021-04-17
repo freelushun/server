@@ -13,6 +13,8 @@ public class PlanWord {
 
     private String classid;
 
+    private String status;
+
     public Integer getId() {
         return id;
     }
@@ -61,6 +63,14 @@ public class PlanWord {
         this.classid = classid;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -73,6 +83,7 @@ public class PlanWord {
         sb.append(", href=").append(href);
         sb.append(", means=").append(means);
         sb.append(", classid=").append(classid);
+        sb.append(", status=").append(status);
         sb.append("]");
         return sb.toString();
     }

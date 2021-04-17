@@ -8,6 +8,7 @@
     <result column="href" jdbcType="VARCHAR" property="href" />
     <result column="means" jdbcType="VARCHAR" property="means" />
     <result column="classid" jdbcType="VARCHAR" property="classid" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, word, soundmark, href, means, classid
+    id, word, soundmark, href, means, classid, status
   </sql>
   <select id="selectByExample" parameterType="com.free.wordbookserver.domain.PlanWordExample" resultMap="BaseResultMap">
     select
@@ -76,7 +77,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from twordrepeat
+    from planword
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,29 +88,29 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from twordrepeat
+    from planword
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from twordrepeat
+    delete from planword
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.free.wordbookserver.domain.PlanWordExample">
-    delete from twordrepeat
+    delete from planword
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.free.wordbookserver.domain.PlanWord">
-    insert into twordrepeat (id, word, soundmark, 
-      href, means, classid
-      )
+    insert into planword (id, word, soundmark, 
+      href, means, classid, 
+      status)
     values (#{id,jdbcType=INTEGER}, #{word,jdbcType=VARCHAR}, #{soundmark,jdbcType=VARCHAR}, 
-      #{href,jdbcType=VARCHAR}, #{means,jdbcType=VARCHAR}, #{classid,jdbcType=VARCHAR}
-      )
+      #{href,jdbcType=VARCHAR}, #{means,jdbcType=VARCHAR}, #{classid,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.free.wordbookserver.domain.PlanWord">
-    insert into twordrepeat
+    insert into planword
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -128,6 +129,9 @@
       </if>
       <if test="classid != null">
         classid,
+      </if>
+      <if test="status != null">
+        status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -149,16 +153,19 @@
       <if test="classid != null">
         #{classid,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.free.wordbookserver.domain.PlanWordExample" resultType="java.lang.Long">
-    select count(*) from twordrepeat
+    select count(*) from planword
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update twordrepeat
+    update planword
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -178,25 +185,29 @@
       <if test="record.classid != null">
         classid = #{record.classid,jdbcType=VARCHAR},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update twordrepeat
+    update planword
     set id = #{record.id,jdbcType=INTEGER},
       word = #{record.word,jdbcType=VARCHAR},
       soundmark = #{record.soundmark,jdbcType=VARCHAR},
       href = #{record.href,jdbcType=VARCHAR},
       means = #{record.means,jdbcType=VARCHAR},
-      classid = #{record.classid,jdbcType=VARCHAR}
+      classid = #{record.classid,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.free.wordbookserver.domain.PlanWord">
-    update twordrepeat
+    update planword
     <set>
       <if test="word != null">
         word = #{word,jdbcType=VARCHAR},
@@ -213,16 +224,20 @@
       <if test="classid != null">
         classid = #{classid,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.free.wordbookserver.domain.PlanWord">
-    update twordrepeat
+    update planword
     set word = #{word,jdbcType=VARCHAR},
       soundmark = #{soundmark,jdbcType=VARCHAR},
       href = #{href,jdbcType=VARCHAR},
       means = #{means,jdbcType=VARCHAR},
-      classid = #{classid,jdbcType=VARCHAR}
+      classid = #{classid,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

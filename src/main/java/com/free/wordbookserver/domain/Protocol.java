@@ -1,5 +1,8 @@
 package com.free.wordbookserver.domain;
 
+/**
+ * 协议表  用来展示协议的内容
+ */
 public class Protocol {
     private Integer protocolId;
 

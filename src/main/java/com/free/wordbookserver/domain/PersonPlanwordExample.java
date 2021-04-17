@@ -3,14 +3,14 @@ package com.free.wordbookserver.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class T11Example {
+public class PersonPlanwordExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public T11Example() {
+    public PersonPlanwordExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -441,6 +441,146 @@ public class T11Example {
 
         public Criteria andMeansNotBetween(String value1, String value2) {
             addCriterion("means not between", value1, value2, "means");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidIsNull() {
+            addCriterion("classid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidIsNotNull() {
+            addCriterion("classid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidEqualTo(String value) {
+            addCriterion("classid =", value, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidNotEqualTo(String value) {
+            addCriterion("classid <>", value, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidGreaterThan(String value) {
+            addCriterion("classid >", value, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidGreaterThanOrEqualTo(String value) {
+            addCriterion("classid >=", value, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidLessThan(String value) {
+            addCriterion("classid <", value, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidLessThanOrEqualTo(String value) {
+            addCriterion("classid <=", value, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidLike(String value) {
+            addCriterion("classid like", value, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidNotLike(String value) {
+            addCriterion("classid not like", value, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidIn(List<String> values) {
+            addCriterion("classid in", values, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidNotIn(List<String> values) {
+            addCriterion("classid not in", values, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidBetween(String value1, String value2) {
+            addCriterion("classid between", value1, value2, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassidNotBetween(String value1, String value2) {
+            addCriterion("classid not between", value1, value2, "classid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuIsNull() {
+            addCriterion("statu is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuIsNotNull() {
+            addCriterion("statu is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuEqualTo(String value) {
+            addCriterion("statu =", value, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuNotEqualTo(String value) {
+            addCriterion("statu <>", value, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuGreaterThan(String value) {
+            addCriterion("statu >", value, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuGreaterThanOrEqualTo(String value) {
+            addCriterion("statu >=", value, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuLessThan(String value) {
+            addCriterion("statu <", value, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuLessThanOrEqualTo(String value) {
+            addCriterion("statu <=", value, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuLike(String value) {
+            addCriterion("statu like", value, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuNotLike(String value) {
+            addCriterion("statu not like", value, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuIn(List<String> values) {
+            addCriterion("statu in", values, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuNotIn(List<String> values) {
+            addCriterion("statu not in", values, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuBetween(String value1, String value2) {
+            addCriterion("statu between", value1, value2, "statu");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatuNotBetween(String value1, String value2) {
+            addCriterion("statu not between", value1, value2, "statu");
             return (Criteria) this;
         }
     }

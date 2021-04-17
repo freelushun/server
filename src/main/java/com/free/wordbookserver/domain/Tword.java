@@ -1,5 +1,8 @@
 package com.free.wordbookserver.domain;
 
+/**
+ * 单词查询总表
+ */
 public class Tword {
     private Integer id;
 

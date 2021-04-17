@@ -1,5 +1,8 @@
 package com.free.wordbookserver.domain;
 
+/**
+ * 记录用户信息
+ */
 public class User {
     private String userPhone;
 

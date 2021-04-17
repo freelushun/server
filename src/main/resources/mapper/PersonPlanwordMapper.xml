@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.free.wordbookserver.mapper.T11Mapper">
-  <resultMap id="BaseResultMap" type="com.free.wordbookserver.domain.T11">
+<mapper namespace="com.free.wordbookserver.mapper.PersonPlanwordMapper">
+  <resultMap id="BaseResultMap" type="com.free.wordbookserver.domain.PersonPlanword">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="word" jdbcType="VARCHAR" property="word" />
     <result column="soundmark" jdbcType="VARCHAR" property="soundmark" />
     <result column="href" jdbcType="VARCHAR" property="href" />
     <result column="means" jdbcType="VARCHAR" property="means" />
+    <result column="classid" jdbcType="VARCHAR" property="classid" />
+    <result column="statu" jdbcType="VARCHAR" property="statu" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,15 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, word, soundmark, href, means
+    id, word, soundmark, href, means, classid, statu
   </sql>
-  <select id="selectByExample" parameterType="com.free.wordbookserver.domain.T11Example" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.free.wordbookserver.domain.PersonPlanwordExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t11
+    from personplanword
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,27 +88,29 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t11
+    from personplanword
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t11
+    delete from personplanword
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.free.wordbookserver.domain.T11Example">
-    delete from t11
+  <delete id="deleteByExample" parameterType="com.free.wordbookserver.domain.PersonPlanwordExample">
+    delete from personplanword
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.free.wordbookserver.domain.T11">
-    insert into t11 (id, word, soundmark, 
-      href, means)
+  <insert id="insert" parameterType="com.free.wordbookserver.domain.PersonPlanword">
+    insert into personplanword (id, word, soundmark, 
+      href, means, classid, 
+      statu)
     values (#{id,jdbcType=INTEGER}, #{word,jdbcType=VARCHAR}, #{soundmark,jdbcType=VARCHAR}, 
-      #{href,jdbcType=VARCHAR}, #{means,jdbcType=VARCHAR})
+      #{href,jdbcType=VARCHAR}, #{means,jdbcType=VARCHAR}, #{classid,jdbcType=VARCHAR}, 
+      #{statu,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.free.wordbookserver.domain.T11">
-    insert into t11
+  <insert id="insertSelective" parameterType="com.free.wordbookserver.domain.PersonPlanword">
+    insert into personplanword
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -122,6 +126,12 @@
       </if>
       <if test="means != null">
         means,
+      </if>
+      <if test="classid != null">
+        classid,
+      </if>
+      <if test="statu != null">
+        statu,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -140,16 +150,22 @@
       <if test="means != null">
         #{means,jdbcType=VARCHAR},
       </if>
+      <if test="classid != null">
+        #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="statu != null">
+        #{statu,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.free.wordbookserver.domain.T11Example" resultType="java.lang.Long">
-    select count(*) from t11
+  <select id="countByExample" parameterType="com.free.wordbookserver.domain.PersonPlanwordExample" resultType="java.lang.Long">
+    select count(*) from personplanword
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t11
+    update personplanword
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -166,24 +182,32 @@
       <if test="record.means != null">
         means = #{record.means,jdbcType=VARCHAR},
       </if>
+      <if test="record.classid != null">
+        classid = #{record.classid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statu != null">
+        statu = #{record.statu,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t11
+    update personplanword
     set id = #{record.id,jdbcType=INTEGER},
       word = #{record.word,jdbcType=VARCHAR},
       soundmark = #{record.soundmark,jdbcType=VARCHAR},
       href = #{record.href,jdbcType=VARCHAR},
-      means = #{record.means,jdbcType=VARCHAR}
+      means = #{record.means,jdbcType=VARCHAR},
+      classid = #{record.classid,jdbcType=VARCHAR},
+      statu = #{record.statu,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.free.wordbookserver.domain.T11">
-    update t11
+  <update id="updateByPrimaryKeySelective" parameterType="com.free.wordbookserver.domain.PersonPlanword">
+    update personplanword
     <set>
       <if test="word != null">
         word = #{word,jdbcType=VARCHAR},
@@ -197,15 +221,23 @@
       <if test="means != null">
         means = #{means,jdbcType=VARCHAR},
       </if>
+      <if test="classid != null">
+        classid = #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="statu != null">
+        statu = #{statu,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.free.wordbookserver.domain.T11">
-    update t11
+  <update id="updateByPrimaryKey" parameterType="com.free.wordbookserver.domain.PersonPlanword">
+    update personplanword
     set word = #{word,jdbcType=VARCHAR},
       soundmark = #{soundmark,jdbcType=VARCHAR},
       href = #{href,jdbcType=VARCHAR},
-      means = #{means,jdbcType=VARCHAR}
+      means = #{means,jdbcType=VARCHAR},
+      classid = #{classid,jdbcType=VARCHAR},
+      statu = #{statu,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

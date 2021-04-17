@@ -1,5 +1,8 @@
 package com.free.wordbookserver.domain;
 
+/**
+ * 单词目录表
+ */
 public class Catalogue {
     private String classId;
 
