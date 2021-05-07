@@ -1,243 +1,221 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.free.wordbookserver.mapper.PersonPlanwordMapper">
-  <resultMap id="BaseResultMap" type="com.free.wordbookserver.domain.PersonPlanword">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="word" jdbcType="VARCHAR" property="word" />
-    <result column="soundmark" jdbcType="VARCHAR" property="soundmark" />
-    <result column="href" jdbcType="VARCHAR" property="href" />
-    <result column="means" jdbcType="VARCHAR" property="means" />
-    <result column="classid" jdbcType="VARCHAR" property="classid" />
-    <result column="statu" jdbcType="VARCHAR" property="statu" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="com.free.wordbookserver.domain.PersonPlanword">
+        <result column="word" jdbcType="VARCHAR" property="word"/>
+        <result column="soundmark" jdbcType="VARCHAR" property="soundmark"/>
+        <result column="href" jdbcType="VARCHAR" property="href"/>
+        <result column="means" jdbcType="VARCHAR" property="means"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="classId" jdbcType="INTEGER" property="classid"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        word, soundmark, href, means, status, phone, classId
+    </sql>
+    <select id="selectByExample" parameterType="com.free.wordbookserver.domain.PersonPlanwordExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
         </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, word, soundmark, href, means, classid, statu
-  </sql>
-  <select id="selectByExample" parameterType="com.free.wordbookserver.domain.PersonPlanwordExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from personplanword
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from personplanword
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from personplanword
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.free.wordbookserver.domain.PersonPlanwordExample">
-    delete from personplanword
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.free.wordbookserver.domain.PersonPlanword">
-    insert into personplanword (id, word, soundmark, 
-      href, means, classid, 
-      statu)
-    values (#{id,jdbcType=INTEGER}, #{word,jdbcType=VARCHAR}, #{soundmark,jdbcType=VARCHAR}, 
-      #{href,jdbcType=VARCHAR}, #{means,jdbcType=VARCHAR}, #{classid,jdbcType=VARCHAR}, 
-      #{statu,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.free.wordbookserver.domain.PersonPlanword">
-    insert into personplanword
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="word != null">
-        word,
-      </if>
-      <if test="soundmark != null">
-        soundmark,
-      </if>
-      <if test="href != null">
-        href,
-      </if>
-      <if test="means != null">
-        means,
-      </if>
-      <if test="classid != null">
-        classid,
-      </if>
-      <if test="statu != null">
-        statu,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="word != null">
-        #{word,jdbcType=VARCHAR},
-      </if>
-      <if test="soundmark != null">
-        #{soundmark,jdbcType=VARCHAR},
-      </if>
-      <if test="href != null">
-        #{href,jdbcType=VARCHAR},
-      </if>
-      <if test="means != null">
-        #{means,jdbcType=VARCHAR},
-      </if>
-      <if test="classid != null">
-        #{classid,jdbcType=VARCHAR},
-      </if>
-      <if test="statu != null">
-        #{statu,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.free.wordbookserver.domain.PersonPlanwordExample" resultType="java.lang.Long">
-    select count(*) from personplanword
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update personplanword
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.word != null">
-        word = #{record.word,jdbcType=VARCHAR},
-      </if>
-      <if test="record.soundmark != null">
+        <include refid="Base_Column_List"/>
+        from personplanword
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+
+    </select>
+    <delete id="deleteByExample" parameterType="com.free.wordbookserver.domain.PersonPlanwordExample">
+        delete from personplanword
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.free.wordbookserver.domain.PersonPlanword">
+        insert into personplanword (word, soundmark, href,
+                                    means, status, phone,
+                                    classId)
+        values (#{word,jdbcType=VARCHAR}, #{soundmark,jdbcType=VARCHAR}, #{href,jdbcType=VARCHAR},
+                #{means,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+                #{classid,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.free.wordbookserver.domain.PersonPlanword">
+        insert into personplanword
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="word != null">
+                word,
+            </if>
+            <if test="soundmark != null">
+                soundmark,
+            </if>
+            <if test="href != null">
+                href,
+            </if>
+            <if test="means != null">
+                means,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="classid != null">
+                classId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="word != null">
+                #{word,jdbcType=VARCHAR},
+            </if>
+            <if test="soundmark != null">
+                #{soundmark,jdbcType=VARCHAR},
+            </if>
+            <if test="href != null">
+                #{href,jdbcType=VARCHAR},
+            </if>
+            <if test="means != null">
+                #{means,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="classid != null">
+                #{classid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertList">
+        insert into personplanword (word, soundmark, href, means, classid, status, phone) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.word},#{item.soundmark},
+            #{item.href},#{item.means},
+            #{item.classid},#{item.status}
+            ,#{item.phone}
+            )
+
+        </foreach>
+    </insert>
+
+    <delete id="deleteAll">
+        delete from personplanword
+    </delete>
+    <select id="countByExample" parameterType="com.free.wordbookserver.domain.PersonPlanwordExample"
+            resultType="java.lang.Long">
+        select count(*) from personplanword
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map">
+        update personplanword
+        <set>
+            <if test="record.word != null">
+                word = #{record.word,jdbcType=VARCHAR},
+            </if>
+            <if test="record.soundmark != null">
+                soundmark = #{record.soundmark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.href != null">
+                href = #{record.href,jdbcType=VARCHAR},
+            </if>
+            <if test="record.means != null">
+                means = #{record.means,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=VARCHAR},
+            </if>
+            <if test="record.phone != null">
+                phone = #{record.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.classid != null">
+                classId = #{record.classid,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update personplanword
+        set word = #{record.word,jdbcType=VARCHAR},
         soundmark = #{record.soundmark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.href != null">
         href = #{record.href,jdbcType=VARCHAR},
-      </if>
-      <if test="record.means != null">
         means = #{record.means,jdbcType=VARCHAR},
-      </if>
-      <if test="record.classid != null">
-        classid = #{record.classid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.statu != null">
-        statu = #{record.statu,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update personplanword
-    set id = #{record.id,jdbcType=INTEGER},
-      word = #{record.word,jdbcType=VARCHAR},
-      soundmark = #{record.soundmark,jdbcType=VARCHAR},
-      href = #{record.href,jdbcType=VARCHAR},
-      means = #{record.means,jdbcType=VARCHAR},
-      classid = #{record.classid,jdbcType=VARCHAR},
-      statu = #{record.statu,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.free.wordbookserver.domain.PersonPlanword">
-    update personplanword
-    <set>
-      <if test="word != null">
-        word = #{word,jdbcType=VARCHAR},
-      </if>
-      <if test="soundmark != null">
-        soundmark = #{soundmark,jdbcType=VARCHAR},
-      </if>
-      <if test="href != null">
-        href = #{href,jdbcType=VARCHAR},
-      </if>
-      <if test="means != null">
-        means = #{means,jdbcType=VARCHAR},
-      </if>
-      <if test="classid != null">
-        classid = #{classid,jdbcType=VARCHAR},
-      </if>
-      <if test="statu != null">
-        statu = #{statu,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.free.wordbookserver.domain.PersonPlanword">
-    update personplanword
-    set word = #{word,jdbcType=VARCHAR},
-      soundmark = #{soundmark,jdbcType=VARCHAR},
-      href = #{href,jdbcType=VARCHAR},
-      means = #{means,jdbcType=VARCHAR},
-      classid = #{classid,jdbcType=VARCHAR},
-      statu = #{statu,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        status = #{record.status,jdbcType=VARCHAR},
+        phone = #{record.phone,jdbcType=VARCHAR},
+        classId = #{record.classid,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
 </mapper>

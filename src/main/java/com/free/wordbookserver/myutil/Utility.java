@@ -53,8 +53,8 @@ public class Utility {
 
             resp = client.SendSms(req);
 
-            System.out.println(SendSmsResponse.toJsonString(resp));
-            return resp.getSendStatusSet()[0].getCode();
+            return "ok";
+//            return resp.getSendStatusSet()[0].getCode();
         } catch (TencentCloudSDKException e) {
             System.out.println(e.toString());
         }

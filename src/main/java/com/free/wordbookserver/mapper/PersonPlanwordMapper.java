@@ -10,21 +10,20 @@ public interface PersonPlanwordMapper {
 
     int deleteByExample(PersonPlanwordExample example);
 
-    int deleteByPrimaryKey(Integer id);
-
     int insert(PersonPlanword record);
 
     int insertSelective(PersonPlanword record);
 
     List<PersonPlanword> selectByExample(PersonPlanwordExample example);
 
-    PersonPlanword selectByPrimaryKey(Integer id);
-
     int updateByExampleSelective(@Param("record") PersonPlanword record, @Param("example") PersonPlanwordExample example);
 
     int updateByExample(@Param("record") PersonPlanword record, @Param("example") PersonPlanwordExample example);
 
-    int updateByPrimaryKeySelective(PersonPlanword record);
+    int insertList(List<PersonPlanword> list);
 
-    int updateByPrimaryKey(PersonPlanword record);
+    int deleteAll();
+
+
+
 }

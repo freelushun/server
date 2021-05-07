@@ -3,8 +3,7 @@ package com.free.wordbookserver.service;
 
 import com.free.wordbookserver.domain.*;
 import com.free.wordbookserver.mapper.*;
-import com.sun.org.apache.xml.internal.resolver.Catalog;
-import com.sun.org.apache.xml.internal.resolver.CatalogManager;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +26,11 @@ public class WordService {
     //个人计划单词表
     @Resource
     PlanWordMapper planWordMapper;
+    @Resource
+    PersonPlanwordMapper personPlanwordMapper;
+
+    @Resource
+    StudyTimeMapper studyTimeMapper;
 
 
     /**
@@ -85,5 +89,32 @@ public class WordService {
         PlanWordExample example = new PlanWordExample();
         example.createCriteria().andClassidEqualTo(classId);
         return planWordMapper.selectByExample(example);
+    }
+
+    /**
+     * 保存个人已经学习的单词记录
+     *
+     * @param personPlanwords
+     */
+    public int insertList(List<PersonPlanword> personPlanwords) {
+
+        personPlanwordMapper.insertList(personPlanwords);
+        PersonPlanwordExample example = new PersonPlanwordExample();
+        example.setDistinct(true);
+        personPlanwords = personPlanwordMapper.selectByExample(example);
+        int size = personPlanwords.size();
+        personPlanwordMapper.deleteAll();
+        personPlanwordMapper.insertList(personPlanwords);
+
+        Plan plan = planMapper.selectByPrimaryKey(personPlanwords.get(0).getPhone());
+        plan.setFinished(String.valueOf(size));
+        planMapper.updateByPrimaryKey(plan);
+        return size;
+
+    }
+
+    public String saveStudyDays(StudyTime studyTime) {
+        studyTimeMapper.insert(studyTime);
+        return "success";
     }
 }

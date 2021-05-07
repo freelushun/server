@@ -5,6 +5,7 @@ package com.free.wordbookserver.domain;
  * 个人的计划表
  */
 public class Plan {
+
     private String phone;
 
     private String classId;

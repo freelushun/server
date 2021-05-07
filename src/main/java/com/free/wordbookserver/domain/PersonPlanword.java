@@ -1,8 +1,6 @@
 package com.free.wordbookserver.domain;
 
 public class PersonPlanword {
-    private Integer id;
-
     private String word;
 
     private String soundmark;
@@ -11,17 +9,11 @@ public class PersonPlanword {
 
     private String means;
 
-    private String classid;
+    private String status;
 
-    private String statu;
+    private String phone;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private Integer classid;
 
     public String getWord() {
         return word;
@@ -55,20 +47,28 @@ public class PersonPlanword {
         this.means = means;
     }
 
-    public String getClassid() {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Integer getClassid() {
         return classid;
     }
 
-    public void setClassid(String classid) {
+    public void setClassid(Integer classid) {
         this.classid = classid;
-    }
-
-    public String getStatu() {
-        return statu;
-    }
-
-    public void setStatu(String statu) {
-        this.statu = statu;
     }
 
     @Override
@@ -77,13 +77,13 @@ public class PersonPlanword {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
         sb.append(", word=").append(word);
         sb.append(", soundmark=").append(soundmark);
         sb.append(", href=").append(href);
         sb.append(", means=").append(means);
+        sb.append(", status=").append(status);
+        sb.append(", phone=").append(phone);
         sb.append(", classid=").append(classid);
-        sb.append(", statu=").append(statu);
         sb.append("]");
         return sb.toString();
     }

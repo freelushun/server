@@ -1,15 +1,15 @@
 package com.free.wordbookserver.controller;
 
-import com.free.wordbookserver.domain.Catalogue;
-import com.free.wordbookserver.domain.Plan;
+import com.free.wordbookserver.domain.*;
 
-import com.free.wordbookserver.domain.PlanWord;
 import com.free.wordbookserver.dto.QueryWord;
 import com.free.wordbookserver.myutil.ConvertUtil;
 import com.free.wordbookserver.service.WordService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,7 +17,6 @@ import java.util.List;
  */
 @RestController
 public class WordController {
-
 
 
     @Resource
@@ -56,7 +55,8 @@ public class WordController {
 
     /**
      * 去人单词表id后 返回对应的单词表
-     * @param classId  单词表id
+     *
+     * @param classId 单词表id
      * @return 具体的单词表
      */
     @GetMapping("/word/plan/table/{classId}")
@@ -66,7 +66,22 @@ public class WordController {
     }
 
 
+    /**
+     * 增阿个人已经学过的单词
+     *
+     * @param personPlanwords
+     * @return
+     */
+    @PostMapping("/word/plan/table/list")
+    public String insertList(@RequestBody List<PersonPlanword> personPlanwords) {
 
+        return String.valueOf(service.insertList(personPlanwords));
 
+    }
+
+    @PostMapping("/time/studydays")
+    public String saveStudyDayse(@RequestBody StudyTime studyTime ){
+        return service.saveStudyDays(studyTime);
+    }
 
 }

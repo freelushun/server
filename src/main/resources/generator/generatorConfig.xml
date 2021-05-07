@@ -45,16 +45,18 @@
         <!--    协议表-->
         <!--        <table tableName="protocol" domainObjectName="Protocol"/>-->
         <!--        用户表-->
-<!--                <table tableName="user" domainObjectName="User"/>-->
+        <!--                <table tableName="user" domainObjectName="User"/>-->
         <!--验证码表-->
-<!--        <table tableName="verifycode" domainObjectName="VerifyCode"/>-->
-<!--        <table tableName="t11" domainObjectName="T11"/>-->
-<!--        <table tableName="tword" domainObjectName="Tword"/>-->
-<!--        <table tableName="plan" domainObjectName="Plan"/>-->
-<!--        <table tableName="catalogue" domainObjectName="Catalogue"/>-->
-            <table tableName="planword" domainObjectName="PlanWord"/>
-            <table tableName="personplanword" domainObjectName="PersonPlanword"/>
-
+        <!--        <table tableName="verifycode" domainObjectName="VerifyCode"/>-->
+        <!--        <table tableName="t11" domainObjectName="T11"/>-->
+        <!--        <table tableName="tword" domainObjectName="Tword"/>-->
+        <!--        <table tableName="plan" domainObjectName="Plan"/>-->
+        <!--        <table tableName="catalogue" domainObjectName="Catalogue"/>-->
+        <!--            <table tableName="planword" domainObjectName="PlanWord"/>-->
+        <!--            <table tableName="personplanword" domainObjectName="PersonPlanword"/>-->
+<!--        <table tableName="studytime" domainObjectName="StudyTime"/>-->
+<!--        <table tableName="book" domainObjectName="Book"/>-->
+        <table tableName="music" domainObjectName="Music"/>
 
 
     </context>

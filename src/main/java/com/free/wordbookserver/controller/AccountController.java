@@ -158,6 +158,12 @@ public class AccountController {
     }
 
 
+    @PostMapping("/person/plan/update")
+    public String updatePlan(@RequestBody Plan plan ){
+        System.out.println(plan);
+        service.updatePlan(plan);
+        return "success";
+    }
 
 
 }

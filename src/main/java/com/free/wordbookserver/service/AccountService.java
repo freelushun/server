@@ -133,8 +133,9 @@ public class AccountService {
 
     /**
      * 校验用户账号和密码
-     * @param accountDto  手机号码  密码
-     * @return  手机号码 密码  校验状态  用户名称 用户短id
+     *
+     * @param accountDto 手机号码  密码
+     * @return 手机号码 密码  校验状态  用户名称 用户短id
      * @throws NoSuchAlgorithmException
      */
     public AccountDto verifyPassword(AccountDto accountDto) throws NoSuchAlgorithmException {
@@ -163,7 +164,13 @@ public class AccountService {
         return planMapper.selectByPrimaryKey(phone);
     }
 
+    /**
+     * 根据传入的plan进行更新
+     *
+     * @param plan
+     */
+    public void updatePlan(Plan plan) {
+        planMapper.updateByPrimaryKey(plan);
 
-
-
+    }
 }
