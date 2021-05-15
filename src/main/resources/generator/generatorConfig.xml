@@ -56,7 +56,8 @@
         <!--            <table tableName="personplanword" domainObjectName="PersonPlanword"/>-->
 <!--        <table tableName="studytime" domainObjectName="StudyTime"/>-->
 <!--        <table tableName="book" domainObjectName="Book"/>-->
-        <table tableName="music" domainObjectName="Music"/>
+<!--        <table tableName="music" domainObjectName="Music"/>-->
+        <table tableName="securityquestion" domainObjectName="Securityquestion"/>
 
 
     </context>

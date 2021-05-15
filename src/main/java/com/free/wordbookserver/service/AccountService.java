@@ -3,14 +3,18 @@ package com.free.wordbookserver.service;
 
 import com.free.wordbookserver.domain.*;
 import com.free.wordbookserver.dto.AccountDto;
+import com.free.wordbookserver.dto.SecurityQuesitionDto;
 import com.free.wordbookserver.mapper.PlanMapper;
+import com.free.wordbookserver.mapper.SecurityquestionMapper;
 import com.free.wordbookserver.mapper.UserMapper;
 import com.free.wordbookserver.mapper.VerifyCodeMapper;
 import com.free.wordbookserver.myutil.BasicUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,7 +29,8 @@ public class AccountService {
     private VerifyCodeMapper verifyCodeMapper;
     @Resource
     private PlanMapper planMapper;
-
+    @Resource
+    private SecurityquestionMapper securityquestionMapper;
 
     /**
      * 通过手机号检查是否存在账户
@@ -172,5 +177,111 @@ public class AccountService {
     public void updatePlan(Plan plan) {
         planMapper.updateByPrimaryKey(plan);
 
+    }
+
+    /**
+     * 根据传入的手机号 返回User
+     *
+     * @return
+     */
+    public User queryUser(String phone) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUserPhoneEqualTo(phone);
+        List<User> users = userMapper.selectByExample(userExample);
+        if (!users.isEmpty()) return users.get(0);
+        else return null;
+    }
+
+
+    //检查密码是否正确,然后返回是否
+    public boolean checkPassword(AccountDto accountDto) throws NoSuchAlgorithmException {
+        User user = userMapper.selectByPrimaryKey(accountDto.getPhone());
+        if (user == null) {
+            return false;
+        }
+        return BasicUtil.encryptBySHA256(accountDto.getPassword()).equals(user.getPassword());
+
+
+    }
+
+    /**
+     * 查询是否有密保
+     *
+     * @param phone 传入手机号码
+     * @return 返回密保dto
+     */
+    public SecurityQuesitionDto querySecurityQuesition(String phone) {
+        SecurityQuesitionDto securityQuesitionDto = new SecurityQuesitionDto();
+        //查询是否有密保
+        SecurityquestionExample securityquestionExample = new SecurityquestionExample();
+        securityquestionExample.createCriteria().andPhoneEqualTo(phone);
+        List<Securityquestion> securityquestions = securityquestionMapper.selectByExample(securityquestionExample);
+        if (securityquestions != null && securityquestions.size() > 0) {
+
+            securityQuesitionDto.setFlag(true);
+            securityQuesitionDto.setSecurityquestion(securityquestionMapper.selectByExample(securityquestionExample).get(0));
+        } else {
+            securityQuesitionDto.setFlag(false);
+            securityQuesitionDto.setSecurityquestion(null);
+        }
+
+        return securityQuesitionDto;
+
+    }
+
+    /**
+     * 检查是否设置密码
+     *
+     * @param phone 手机号码
+     * @return 是否有密码
+     */
+    public boolean isSettingPassword(String phone) {
+
+        User user = userMapper.selectByPrimaryKey(phone);
+        if (user == null) return false;
+        return user.getPassword() != null;
+
+    }
+
+    /**
+     * @param phone 手机号码
+     * @return 1 只有手机号码  2 手机号码和密码  3 手机号码   密保 4  手机号码  密码   密保
+     */
+    public int isSettingSecurity(String phone) {
+
+        boolean flagPassword = isSettingPassword(phone);
+        SecurityquestionExample example = new SecurityquestionExample();
+        example.createCriteria().andPhoneEqualTo(phone);
+        List<Securityquestion> securityquestions = securityquestionMapper.selectByExample(example);
+        boolean flagSecurifyQeusetion = !securityquestions.isEmpty();
+        if (!flagPassword && flagSecurifyQeusetion) return 1;
+        if (flagPassword && !flagSecurifyQeusetion) return 2;
+
+        if (!flagPassword && flagSecurifyQeusetion) return 3;
+        if (flagPassword && flagSecurifyQeusetion) return 4;
+        else return 1;
+
+    }
+
+    /**
+     * @param map 三个参数
+     * @return 返回是否修改成功
+     */
+    public boolean changePassword(@RequestBody HashMap<String, String> map) throws NoSuchAlgorithmException {
+        String oldPassword = map.get("oldPassword");
+        String newPassword = map.get("newPassword");
+        String phone = map.get("phone");
+
+        User user = userMapper.selectByPrimaryKey(phone);
+        if (user == null) return false;
+
+        if (BasicUtil.encryptBySHA256(oldPassword).equals(user.getPassword())) {
+            user.setPassword(BasicUtil.encryptBySHA256(newPassword));
+            userMapper.updateByPrimaryKey(user);
+            return true;
+        }
+
+
+        return false;
     }
 }

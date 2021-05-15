@@ -2,14 +2,21 @@ package com.free.wordbookserver.controller;
 
 
 import com.free.wordbookserver.domain.Plan;
+import com.free.wordbookserver.domain.Securityquestion;
+import com.free.wordbookserver.domain.User;
 import com.free.wordbookserver.dto.AccountDto;
+import com.free.wordbookserver.dto.SecurityQuesitionDto;
 import com.free.wordbookserver.myutil.BasicUtil;
 import com.free.wordbookserver.myutil.Utility;
 import com.free.wordbookserver.service.AccountService;
+import com.free.wordbookserver.service.SecurityquestionService;
+import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 账号服务控制器
@@ -21,6 +28,8 @@ public class AccountController {
 
     @Resource
     private AccountService service;
+    @Resource
+    private SecurityquestionService securityquestionService;
 
 
     /**
@@ -149,21 +158,96 @@ public class AccountController {
 
     /**
      * 根据传入的手机号码 返回个人的计划安排表
+     *
      * @param phone 手机号码
      * @return 计划安排表
      */
     @GetMapping("/person/plan/{phone}")
-    public Plan queryPersonPlan(@PathVariable String phone){
-        return  service.obPlan(phone);
+    public Plan queryPersonPlan(@PathVariable String phone) {
+        return service.obPlan(phone);
     }
 
 
     @PostMapping("/person/plan/update")
-    public String updatePlan(@RequestBody Plan plan ){
+    public String updatePlan(@RequestBody Plan plan) {
         System.out.println(plan);
         service.updatePlan(plan);
         return "success";
     }
 
+    //查询用户信息
+    @RequestMapping("/user/{phone}")
+    public User queryUser(@PathVariable String phone) {
+        return service.queryUser(phone);
+    }
+
+
+    //查询用户的密保信息
+    @RequestMapping("/user/securityQestion/{phone}")
+    public Securityquestion querySecurityQuestion(@PathVariable String phone) {
+
+        return securityquestionService.querySecurityQuestion(phone);
+    }
+
+
+    /**
+     * 校验用户密保是否 正确
+     */
+    @RequestMapping("/user/checkQuestion/{phone}")
+    public boolean checkQuestion(@RequestBody Securityquestion securityquestion){
+        return  securityquestionService.checkQuestion(securityquestion);
+    }
+
+
+
+    /**
+     * 检查密码是否正确
+     */
+    @PostMapping("/user/checkPassword")
+    public boolean verifyPassword(@RequestBody AccountDto accountDto) throws NoSuchAlgorithmException {
+        return service.checkPassword(accountDto);
+    }
+
+    /**
+     * 查询是否有密保
+     */
+    @RequestMapping("/user/querySecurityQuesition/{phone}")
+    public SecurityQuesitionDto querySecurityQuesition(@PathVariable String phone) {
+        return service.querySecurityQuesition(phone);
+    }
+
+    /**
+     * 保存密保
+     */
+    @RequestMapping("/user/saveSecurityQuesition")
+    public boolean saveSecurityQuesition(@RequestBody Securityquestion securityquestion) throws NoSuchAlgorithmException {
+        securityquestionService.saveSecurityQuesition(securityquestion);
+
+        return true;
+    }
+
+    @RequestMapping("/user/isSettingPassword/{phone}")
+    public boolean isSettingPassword(@PathVariable String phone) {
+        return service.isSettingPassword(phone);
+    }
+
+
+    /**
+     * @param phone 手机号码
+     * @return 1 只有手机号码  2 手机号码和密码  3  手机号码  密码   密保
+     */
+    @RequestMapping("/user/isSettingSecurity/{phone}")
+    public int isSettingSecurity(@PathVariable String phone) {
+        return service.isSettingSecurity(phone);
+    }
+
+
+    @RequestMapping("/user/changePassword")
+    public boolean changePassword(@RequestBody String s) throws NoSuchAlgorithmException {
+        HashMap<String, String> map = new Gson().fromJson(s, HashMap.class);
+        return service.changePassword(map);
+
+
+    }
 
 }
