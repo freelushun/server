@@ -80,10 +80,12 @@ public class AccountController {
                     verifyCodeUse = "00";
                 }
                 break;
-            case "1":
 
-                break;
             case "2":
+                Utility.sendSms(verifyCode, phone, Utility.MODIFY);
+                verifyCodeUse = "02";
+                status = "true";
+
                 break;
             default:
                 break;
@@ -193,11 +195,10 @@ public class AccountController {
     /**
      * 校验用户密保是否 正确
      */
-    @RequestMapping("/user/checkQuestion/{phone}")
-    public boolean checkQuestion(@RequestBody Securityquestion securityquestion){
-        return  securityquestionService.checkQuestion(securityquestion);
+    @RequestMapping("/user/checkQuestion")
+    public boolean checkQuestion(@RequestBody Securityquestion securityquestion) throws NoSuchAlgorithmException {
+        return securityquestionService.checkQuestion(securityquestion);
     }
-
 
 
     /**
@@ -242,6 +243,7 @@ public class AccountController {
     }
 
 
+    //修改密码
     @RequestMapping("/user/changePassword")
     public boolean changePassword(@RequestBody String s) throws NoSuchAlgorithmException {
         HashMap<String, String> map = new Gson().fromJson(s, HashMap.class);
@@ -249,5 +251,20 @@ public class AccountController {
 
 
     }
+
+
+    //直接修改密码
+    @RequestMapping("/user/direct/changePassword")
+    public boolean directChangePassword(@RequestBody String gson) throws NoSuchAlgorithmException {
+        HashMap<String, String> map = new Gson().fromJson(gson, HashMap.class);
+        return service.directChangePassword(map);
+    }
+
+    //校验验证码是否正确
+    @RequestMapping("/user/check/VerifyCode")
+    public boolean checkVerifyCode(@RequestBody AccountDto accountDto) {
+        return service.checkVerifyCode(accountDto.getPhone(), accountDto.getVerifyCode()).equals("02");
+    }
+
 
 }

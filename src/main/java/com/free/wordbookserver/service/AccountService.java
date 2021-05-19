@@ -284,4 +284,31 @@ public class AccountService {
 
         return false;
     }
+
+
+    /**
+     * 至直接修改密码
+     * @param map
+     * @return
+     * @throws NoSuchAlgorithmException
+     */
+    public boolean directChangePassword(HashMap<String, String> map) throws NoSuchAlgorithmException {
+        String phone = map.get("phone");
+        if (phone != null) {
+            User user = userMapper.selectByPrimaryKey(phone);
+            String password = map.get("password");
+            if (password != null) {
+                user.setPassword(BasicUtil.encryptBySHA256(password));
+                userMapper.updateByPrimaryKey(user);
+                System.out.println(3);
+                return true;
+            }
+            System.out.println(2);
+            return false;
+        }
+
+        System.out.println(1);
+        return false;
+
+    }
 }

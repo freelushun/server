@@ -20,6 +20,7 @@ public class SecurityquestionService {
 
     /**
      * 查询密保问题
+     *
      * @param phone 手机号
      * @return 密保
      */
@@ -39,11 +40,9 @@ public class SecurityquestionService {
     }
 
 
-
-
-
     /**
      * 保存密保问题
+     *
      * @param securityquestion
      * @throws NoSuchAlgorithmException
      */
@@ -61,12 +60,24 @@ public class SecurityquestionService {
 
     /**
      * 校验密保是否正确
+     *
      * @param securityquestion 传入
      * @return boolean
      */
-    public boolean checkQuestion(Securityquestion securityquestion) {
-
-
-        return  false;
+    public boolean checkQuestion(Securityquestion securityquestion) throws NoSuchAlgorithmException {
+        String phone = securityquestion.getPhone();
+        String answer1 = securityquestion.getAnswerone();
+        String answer2 = securityquestion.getAnswertwo();
+        String answer3 = securityquestion.getAnswerthree();
+        SecurityquestionExample example = new SecurityquestionExample();
+        example.createCriteria().andPhoneEqualTo(phone);
+        List<Securityquestion> securityquestions = mapper.selectByExample(example);
+        if (securityquestions != null && securityquestions.size() > 0) {
+            Securityquestion securityquestionDb = securityquestions.get(0);
+            return securityquestionDb.getAnswerone().equals(BasicUtil.encryptBySHA256(answer1))
+                    && securityquestionDb.getAnswertwo().equals(BasicUtil.encryptBySHA256(answer2))
+                    && securityquestionDb.getAnswerthree().equals(BasicUtil.encryptBySHA256(answer3));
+        }
+        return false;
     }
 }
